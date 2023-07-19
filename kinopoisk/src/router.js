@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import App from './App.vue'
+import FilmsList from '@/components/FilmsList.vue'
 
 const router = createRouter({
     history: createWebHistory(), 
@@ -8,7 +8,7 @@ const router = createRouter({
         {
             path: '/',
             name: 'home',
-            component: App
+            component: FilmsList
         }
     ]
 })
