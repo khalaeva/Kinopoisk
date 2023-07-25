@@ -1,27 +1,29 @@
 <template>
-    <div class="movie-cart">
-        <MovieCart v-for="movie of mainStore.movies"  :movie="movie"/>
-        <a-pagination :total="100" v-model="current" @change="onChange(current)"></a-pagination>
-    </div>
-    
+    <section class="films-list">
+            <div class="movie-cart">
+                <MovieCart v-for="movie of mainStore.moviesByPages[numberPage - 1]"  :movie="movie"/>
+            </div>
+            <div class="pagination">
+                <a-pagination v-model:current="numberPage" @change="onChange" :pageSize="20" :total="mainStore.moviesByPages.length * 20" :show-size-changer="false"/>
+            </div>
+    </section>
 </template>
 
 <script setup>
 import { useMainStore } from '@/store/MainStore'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import MovieCart from './Views/MovieCart.vue'
-import { ref } from 'vue'
 
 const mainStore = useMainStore()
-const current = ref(1);
+const numberPage = ref(1)
 
 onMounted (() => {
     mainStore.getMoviesFromAPI()
 })
-function onChange(current) {
-        this.current = current;
-        console.log(current)  
-      }
+
+function onChange() {
+    console.log(numberPage)
+}
 </script>
 
 <style lang="scss" scoped>
