@@ -1,8 +1,10 @@
 @import url('https://fonts.cdnfonts.com/css/satoshi');
+@import url('https://fonts.cdnfonts.com/css/sporting');
 
 :root {
     --satoshi: 'Satoshi', sans-serif;
     --clash: 'Clash Display', sans-serif;
+    --sport: 'Sporting', sans-serif;
 }
 
 * {
@@ -27,7 +29,6 @@ img {
 }
 
 .container{
-  max-width: 1440px;
   margin: auto;
 }
 
@@ -37,26 +38,3 @@ img {
   font-size: 16px;
   border: none;
 }
-
-// .ant-pagination-item {
-//   & a {
-//     color: black !important;
-//     &:hover{
-//       color: #E55812 !important
-//     }
-//   }
-//   &:hover{
-//     border-color: #E55812 !important  
-//   }
-// }
-
-// .ant-pagination-item-active {
-//   & a {
-//     color: #E55812 !important
-//   }
-//   border-color: #E55812 !important
-// }
-
-// .ant-pagination-prev {
-//   color: #E55812 !important
-// }

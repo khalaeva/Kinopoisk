@@ -1,11 +1,11 @@
 <template>
     <section class="films-list">
-            <div class="movie-cart">
-                <MovieCart v-for="movie of mainStore.moviesByPages[numberPage - 1]"  :movie="movie"/>
-            </div>
-            <div class="pagination">
-                <a-pagination v-model:current="numberPage" @change="onChange" :pageSize="20" :total="mainStore.moviesByPages.length * 20" :show-size-changer="false"/>
-            </div>
+        <div class="movie-cart">
+            <MovieCart v-for="movie of mainStore.moviesByPages[numberPage - 1]"  :movie="movie"/>
+        </div>
+        <div class="pagination">
+            <a-pagination v-model:current="numberPage" @change="onChange" :pageSize="20" :total="mainStore.moviesByPages.length * 20" :show-size-changer="false"/>
+        </div>
     </section>
 </template>
 
@@ -22,11 +22,14 @@ onMounted (() => {
 })
 
 function onChange() {
-    console.log(numberPage)
+    window.scrollTo(0,0)
 }
 </script>
 
 <style lang="scss" scoped>
+.films-list {
+    margin: 50px 3% 50px 3%;
+}
 .movie-cart {
     display: flex;
     flex-wrap: wrap;

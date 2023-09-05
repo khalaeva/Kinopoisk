@@ -1,9 +1,10 @@
 <template>
     <div class="cart">
         <img class="poster" alt="poster" :src="movie.poster.url">
-        <p>{{ movie.name }} ({{ movie.year }})</p>
-        <div class="about">
-            
+        <div class="rating">
+            <p style="font-size: 33px;">{{ movie.name }} </p>
+            <p style="font-size: 18px;">{{ movie.year }} · {{ movie.movieLength }} мин</p>
+            <p style="font-size: 15px;">KP: {{ movie.rating.kp.toFixed(1) }} &nbsp; IMBD: {{ movie.rating.imdb }}</p>
         </div>
     </div>
 </template>
@@ -18,16 +19,39 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
+.rating {
+    p {
+        text-align: left;
+        font-weight: 500;
+        margin: 0 20px 5px 20px;
+    }
+} 
 .cart {
-    margin-bottom: 37px;
+    position: relative;
+    margin-bottom: 50px;
     padding: 0 15px;
     width: 20%;
-    min-width: 120px;
+    min-width: 200px;
 }
 .poster {
     transition: 1s;
 }
-.poster:hover {
-    transform: scale(1.07) translateY(-7px); 
+.rating {
+    opacity: 0;
+    position: absolute;
+    bottom: 40px;
+    left: 0;
 }
+.cart:hover {
+    cursor: pointer;
+    .poster {
+        opacity: 0.4;
+        transform: scale(1.07) translateY(-7px); 
+    }
+    .rating {
+        opacity: 1;
+    }
+}
+
+
 </style>
