@@ -2,7 +2,8 @@ import {defineStore} from 'pinia'
 
 export const useMainStore = defineStore('MainStore', {
     state: () => ({
-        moviesByPages: []
+        moviesByPages: [],
+        movies: []
     }),
     actions: {
         getMoviesFromAPI() {
@@ -11,10 +12,10 @@ export const useMainStore = defineStore('MainStore', {
                     return response.json();
                 })
                 .then((data) => {
-                    let movies = data
+                    this.movies = data
                     let size = 20
-                    for (let i = 0; i < Math.ceil(movies.length / size); i++){
-                        this.moviesByPages[i] = movies.slice((i*size), (i*size) + size)
+                    for (let i = 0; i < Math.ceil(this.movies.length / size); i++){
+                        this.moviesByPages[i] = this.movies.slice((i*size), (i*size) + size)
                     }
                 });
         }

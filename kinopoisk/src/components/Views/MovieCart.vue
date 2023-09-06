@@ -6,6 +6,9 @@
             <p style="font-size: 18px;">{{ movie.year }} · {{ movie.movieLength }} мин</p>
             <p style="font-size: 15px;">KP: {{ movie.rating.kp.toFixed(1) }} &nbsp; IMBD: {{ movie.rating.imdb }}</p>
         </div>
+        <div class="rating__small_screen">
+            <p style="font-size: 20px; margin-bottom: 0">{{ movie.name }} </p>
+        </div>
     </div>
 </template>
 
@@ -20,6 +23,10 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .rating {
+    opacity: 0;
+    position: absolute;
+    bottom: 40px;
+    left: 0;
     p {
         text-align: left;
         font-weight: 500;
@@ -36,12 +43,6 @@ const props = defineProps({
 .poster {
     transition: 1s;
 }
-.rating {
-    opacity: 0;
-    position: absolute;
-    bottom: 40px;
-    left: 0;
-}
 .cart:hover {
     cursor: pointer;
     .poster {
@@ -53,5 +54,23 @@ const props = defineProps({
     }
 }
 
+.rating__small_screen {
+    display: none;
+}
 
+@media (max-width: 1350px) { 
+    .cart:hover {
+        cursor: pointer;
+        .poster {
+            opacity: 0.4;
+            transform: scale(1.07) translateY(-7px); 
+        }
+        .rating {
+            opacity: 0;
+        }
+    }
+    .rating__small_screen {
+        display: block;
+    }
+}
 </style>
