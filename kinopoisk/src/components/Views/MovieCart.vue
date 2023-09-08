@@ -1,14 +1,16 @@
 <template>
     <div class="cart">
-        <img class="poster" alt="poster" :src="movie.poster.url">
-        <div class="rating">
-            <p style="font-size: 33px;">{{ movie.name }} </p>
-            <p style="font-size: 18px;">{{ movie.year }} · {{ movie.movieLength }} мин</p>
-            <p style="font-size: 15px;">KP: {{ movie.rating.kp.toFixed(1) }} &nbsp; IMBD: {{ movie.rating.imdb }}</p>
-        </div>
-        <div class="rating__small_screen">
-            <p style="font-size: 20px; margin-bottom: 0">{{ movie.name }} </p>
-        </div>
+        <router-link :to="{ name: 'movie', params: {id: movie.id} }">
+            <img class="poster" alt="poster" :src="movie.poster.url">
+            <div class="rating">
+                <p style="font-size: 33px;">{{ movie.name }} </p>
+                <p style="font-size: 18px;">{{ movie.year }} · {{ movie.movieLength }} мин</p>
+                <p style="font-size: 15px;">KP: {{ movie.rating.kp.toFixed(1) }} &nbsp; IMBD: {{ movie.rating.imdb }}</p>
+            </div>
+            <div class="rating__small_screen">
+                <p style="font-size: 20px; margin-bottom: 0">{{ movie.name }} </p>
+            </div>
+        </router-link>
     </div>
 </template>
 

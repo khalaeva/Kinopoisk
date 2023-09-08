@@ -1,12 +1,10 @@
 <template>
     <div class="header">
-        <div class="grid">
-            <p class="site_name">Film Online</p>
-            <SearchBar class="search"/>
-            <div class="star">
-                <StarFilled class="icon"/>
-                <span class="text_icon">Избранное</span>
-            </div>
+        <p class="site_name">Film Online</p>
+        <SearchBar class="search"/>
+        <div class="star">
+            <StarFilled class="icon"/>
+            <span class="text_icon">Избранное</span>
         </div>
     </div>
 </template>
@@ -33,8 +31,8 @@
     color:white; 
     font-size: 30px;
 }
-.grid {
-    margin: 0 100px 0 100px;
+.header {
+    margin: 0 100px 50px 100px;
     display: grid;
     grid-template-columns: minmax(400px, 1fr) 1fr minmax(300px, 1fr);
     grid-column-gap: 20px;
@@ -47,7 +45,7 @@ p {
 }
 
 @media (max-width: 1350px) { 
-    .grid{
+    .header{
         display: flex;
         justify-content: center;
     }

@@ -3,7 +3,8 @@ import {defineStore} from 'pinia'
 export const useMainStore = defineStore('MainStore', {
     state: () => ({
         moviesByPages: [],
-        movies: []
+        movies: [],
+        currentMovie: {}
     }),
     actions: {
         getMoviesFromAPI() {
@@ -17,6 +18,17 @@ export const useMainStore = defineStore('MainStore', {
                     for (let i = 0; i < Math.ceil(this.movies.length / size); i++){
                         this.moviesByPages[i] = this.movies.slice((i*size), (i*size) + size)
                     }
+                });
+        },
+        getMovieById(id) {
+            fetch(`http://localhost:3000/docs?id=${id}`)
+                .then((response) => {
+                    console.log(2)
+                    return response.json();
+                })
+                .then((data) => {
+                    this.currentMovie = data[0]
+                    console.log(this.currentMovie)
                 });
         }
     }
