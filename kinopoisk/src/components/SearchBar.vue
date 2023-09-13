@@ -5,7 +5,7 @@
             class="input_search" 
             v-model:value="filmName" placeholder="Поиск кино" 
             @focus="focused = true" 
-            @blur="focused = true"
+            @blur="focused = false"
             style="border-radius: 10px;"
         >
             <template #prefix>
@@ -64,7 +64,7 @@
     margin-right: auto;
     left: 0;
     right: 0;
-    z-index: 1;
+    z-index: 3;
     width: 500px; 
     padding: 15px 0 15px 0;
     border-radius: 10px;

@@ -1,9 +1,11 @@
 <template>
     <div class="header">
-        <p class="site_name">Film Online</p>
+        <router-link :to="{ name: 'home'}">
+            <p class="site_name">Film Online</p>
+        </router-link>
         <SearchBar class="search"/>
         <div class="star">
-            <StarFilled class="icon"/>
+            <HeartFilled class="icon"/>
             <span class="text_icon">Избранное</span>
         </div>
     </div>
@@ -11,12 +13,12 @@
 
 <script setup>
     import SearchBar from '../SearchBar.vue'
-    import { StarFilled } from '@ant-design/icons-vue';
+    import { HeartFilled } from '@ant-design/icons-vue';
 </script>
 
 <style lang="scss" scoped>
 .site_name {
-    align-self: center;
+    align-self: start;
 }
 .search, .star{
     justify-self: end; 

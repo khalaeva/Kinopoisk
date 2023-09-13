@@ -23,12 +23,10 @@ export const useMainStore = defineStore('MainStore', {
         getMovieById(id) {
             fetch(`http://localhost:3000/docs?id=${id}`)
                 .then((response) => {
-                    console.log(2)
                     return response.json();
                 })
                 .then((data) => {
                     this.currentMovie = data[0]
-                    console.log(this.currentMovie)
                 });
         }
     }
