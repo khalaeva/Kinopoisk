@@ -37,7 +37,7 @@
             <p class="description">{{ mainStore.currentMovie.description }} </p>
         </div>
     </div>
-    <span>{{ recom(mainStore.currentMovie) }}</span>
+        <RecommendMovie :movie="mainStore.currentMovie"/>
 </template>
 
 <script setup>
@@ -45,16 +45,13 @@ import { HeartFilled, HeartOutlined } from '@ant-design/icons-vue';
 import { useMainStore } from '@/store/MainStore'
 import { useRoute } from 'vue-router'
 import { ref } from 'vue'
+import RecommendMovie from './RecommendMovie.vue';
 
 const route = useRoute()
 const mainStore = useMainStore()
 let liked = ref(false)
 
 mainStore.getMovieById(route.params.id)
-
-function recom(mov) {
-    mainStore.recommend(mov.description, mainStore.movies[0].description)
-}
 </script>
 
 <style lang="scss" scoped>

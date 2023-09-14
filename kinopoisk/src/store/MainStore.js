@@ -4,7 +4,9 @@ export const useMainStore = defineStore('MainStore', {
     state: () => ({
         moviesByPages: [],
         movies: [],
-        currentMovie: {}
+        currentMovie: {},
+        keyTxt: ['комедия', 'боевик', 'драма', 'детектив', 'триллер', 'блокбастер', 'Marvel'],
+        recommendMovies: []
     }),
     actions: {
         pagination(arr) {
@@ -32,6 +34,7 @@ export const useMainStore = defineStore('MainStore', {
                 });
         },
         getMovieById(id) {
+            this.currentMovie = {}
             fetch(`http://localhost:3000/docs?id=${id}`)
                 .then((response) => {
                     return response.json();
@@ -39,19 +42,22 @@ export const useMainStore = defineStore('MainStore', {
                 .then((data) => {
                     this.currentMovie = data[0]
                 });
+            
         },
-        recommend(filmA, filmB) {
-            console.log(filmA, filmB)
-            const res = filmA.replace(/к/g, '')
-            var words1 = res.split(/\s+/g),
-            words2 = filmB.split(/\s+/g),
-            i,
-            j;
+        recommend(movie) {
+            this.recommendMovies = [] 
+            var genre
 
-            for (i = 0; i < words1.length; i++) {
-                for (j = 0; j < words2.length; j++) {
-                    if (words1[i].toLowerCase() == words2[j].toLowerCase()) {
-                    console.log('word '+words1[i]+' was found in both strings');
+            for (let i = 0; i < this.keyTxt.length; i++) {
+                if (movie.indexOf(this.keyTxt[i]) != -1) {
+                    genre = this.keyTxt[i]
+                } 
+            }
+            console.log(genre)
+            for (let i = 0; i < this.movies.length; i++) {
+                if (this.movies[i].shortDescription && genre) {
+                    if (this.movies[i].shortDescription.indexOf(genre) != -1) {
+                        this.recommendMovies.push(this.movies[i])
                     }
                 }
             }
