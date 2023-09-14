@@ -37,6 +37,7 @@
             <p class="description">{{ mainStore.currentMovie.description }} </p>
         </div>
     </div>
+    <span>{{ recom(mainStore.currentMovie) }}</span>
 </template>
 
 <script setup>
@@ -50,6 +51,10 @@ const mainStore = useMainStore()
 let liked = ref(false)
 
 mainStore.getMovieById(route.params.id)
+
+function recom(mov) {
+    mainStore.recommend(mov.description, mainStore.movies[0].description)
+}
 </script>
 
 <style lang="scss" scoped>

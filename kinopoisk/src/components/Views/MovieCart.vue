@@ -11,11 +11,11 @@
                     </div>
                 </router-link>
                 <div v-if="!liked">
-                    <HeartOutlined @click="liked = !liked" class="icon"/>
+                    <HeartOutlined @click="liked = !liked; likedFilm(movie)" class="icon"/>
                     <p class="icon_txt">Добавить</p>
                 </div>
                 <div v-else>
-                    <HeartFilled @click="liked = !liked" class="icon"/>
+                    <HeartFilled @click="liked = !liked; unlikedFilm(movie)" class="icon"/>
                     <p class="icon_txt">Добавлено</p>
                 </div>
             </div>
@@ -33,17 +33,26 @@
 </template>
 
 <script setup>
-import { EyeOutlined, HeartFilled, HeartOutlined } from '@ant-design/icons-vue';
-import { ref } from 'vue';
-
-let liked = ref(false)
+import { EyeOutlined, HeartFilled, HeartOutlined } from '@ant-design/icons-vue'
 
 const props = defineProps({
     movie: {
         type: Object, 
         require: true
+    },
+    liked: {
+        type: Boolean,
+        require: false
     }
 })
+
+function likedFilm(movie) {
+    localStorage.setItem(`${movie.id}`, JSON.stringify(movie))
+}
+
+function unlikedFilm(movie) {
+    localStorage.removeItem(`${movie.id}`)
+}
 </script>
 
 <style lang="scss" scoped>

@@ -5,8 +5,10 @@
         </router-link>
         <SearchBar class="search"/>
         <div class="star">
-            <HeartFilled class="icon"/>
-            <span class="text_icon">Избранное</span>
+            <router-link :to="{name: 'favourite'}">
+                <HeartFilled class="icon"/>
+                <span class="text_icon">Избранное</span>
+            </router-link>
         </div>
     </div>
 </template>

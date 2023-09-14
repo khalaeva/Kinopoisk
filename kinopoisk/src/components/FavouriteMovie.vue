@@ -5,21 +5,21 @@
             <MovieCart v-for="movie of mainStore.moviesByPages[numberPage - 1]"  :movie="movie" :liked="liked(movie)"/>
         </div>
         <div class="pagination">
-            <a-pagination v-model:current="numberPage" @change="onChange()" :pageSize="20" :total="mainStore.moviesByPages.length * 20" :show-size-changer="false"/>
+            <a-pagination v-model:current="numberPage" @change="onChange" :pageSize="20" :total="mainStore.moviesByPages.length * 20" :show-size-changer="false"/>
         </div>
     </section>
 </template>
 
 <script setup>
 import { useMainStore } from '@/store/MainStore'
-import { ref } from 'vue'
-import SortMovies from './SortMovies.vue';
 import MovieCart from './Views/MovieCart.vue'
+import SortMovies from './SortMovies.vue';
+import { ref } from 'vue'
 
 const mainStore = useMainStore()
 const numberPage = ref(1)
 
-mainStore.getMoviesFromAPI()
+mainStore.getMoviesFromLocalStorage()
 
 function liked(movie) {
     return (localStorage.getItem(`${movie.id}`) !== null)
@@ -31,12 +31,11 @@ function onChange() {
 </script>
 
 <style lang="scss" scoped>
-
-.films-list {
-    margin: 50px 3% 50px 3%;
-}
 .movie-cart {
     display: flex;
     flex-wrap: wrap;
+}
+.films-list {
+    margin: 50px 3% 50px 3%;
 }
 </style>
