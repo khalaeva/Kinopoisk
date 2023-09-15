@@ -47,18 +47,4 @@ p {
     font-weight: 600;
     margin-bottom: 0;
 }
-
-@media (max-width: 1350px) { 
-    .header{
-        display: flex;
-        justify-content: center;
-    }
-    .site_name {
-        display: none;
-    }
-    .text_icon {
-        display: none;
-    }
-
-}
 </style>

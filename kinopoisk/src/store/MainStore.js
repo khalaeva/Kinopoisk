@@ -47,20 +47,36 @@ export const useMainStore = defineStore('MainStore', {
         recommend(movie) {
             this.recommendMovies = [] 
             var genre
+            var persons = []
 
             for (let i = 0; i < this.keyTxt.length; i++) {
                 if (movie.indexOf(this.keyTxt[i]) != -1) {
                     genre = this.keyTxt[i]
                 } 
             }
-            console.log(genre)
+            
             for (let i = 0; i < this.movies.length; i++) {
-                if (this.movies[i].shortDescription && genre) {
+                if (this.movies[i].shortDescription && genre && this.movies[i].shortDescription != movie) {
                     if (this.movies[i].shortDescription.indexOf(genre) != -1) {
                         this.recommendMovies.push(this.movies[i])
                     }
                 }
             }
+            
+            movie.replace(/[А-Я][а-я]*/g, u => persons.push(u))
+
+            for (let i = 0; i < this.movies.length; i++) {
+                if (movie != this.movies[i].shortDescription && this.movies[i].shortDescription) {
+                    for (let j = 0; j < persons.length; j++) {
+                        if (this.movies[i].shortDescription.indexOf(` ${persons[j]} `) >= 0) {
+                            this.recommendMovies.push(this.movies[i])
+                            break
+                        }
+                    }
+                }
+            }
+
+            this.recommendMovies.sort(() => Math.random() - 0.5);
         },
         moviesByYearsNew() {
             this.movies.sort((a, b) => a.year - b.year)

@@ -23,38 +23,57 @@
                     <p>imbd.com</p>
                 </div>
                 <div class="my_score">
-                    <p class="score_sites_num">-</p>
+                    <p class="score_sites_num">{{ rating }}</p>
                     <p>Моя оценка</p>
                 </div>
                 <div class="separator"></div>
                 <div class="rate_movie">
                     <p class="rate_movie__txt">Оцените фильм</p>
                     <div class="rate_movie__num">
-                        <p style="margin-bottom: 0; padding: 0 9px" v-for="num in 10">{{ num }}</p>
+                        <p class="rate_movie__numbers" style="" v-for="num in 10" @click="rateMovie(mainStore.currentMovie, num)">{{ num }}</p>
                     </div>
                 </div>
             </div>
             <p class="description">{{ mainStore.currentMovie.description }} </p>
         </div>
     </div>
-        <RecommendMovie :movie="mainStore.currentMovie"/>
+    <RecommendMovie :movie="mainStore.currentMovie"/>
 </template>
 
 <script setup>
 import { HeartFilled, HeartOutlined } from '@ant-design/icons-vue';
 import { useMainStore } from '@/store/MainStore'
-import { useRoute } from 'vue-router'
 import { ref } from 'vue'
 import RecommendMovie from './RecommendMovie.vue';
 
-const route = useRoute()
 const mainStore = useMainStore()
 let liked = ref(false)
+let num = ref(0)
+// JSON.parse(localStorage.getItem(`${mainStore.currentMovie.id}`)).myRating) 
 
-mainStore.getMovieById(route.params.id)
+function rateMovie(currMovie, num) {
+    if (localStorage.getItem(`${currMovie.id}`)) {
+        let movie = JSON.parse(localStorage.getItem(`${currMovie.id}`))
+        movie.myRating = `${num}`
+        localStorage.setItem(`${currMovie.id}`, JSON.stringify(movie))
+        this.rating = num
+    }
+    else {
+        currMovie.myRating = `${num}`
+        localStorage.setItem(`${currMovie.id}`, JSON.stringify(currMovie))
+        this.rating = num
+    }
+}
 </script>
 
 <style lang="scss" scoped>
+.rate_movie__numbers:hover {
+    color: rgb(62, 68, 77);
+    cursor: pointer;
+}
+.rate_movie__numbers {
+    margin-bottom: 0; 
+}
 .description { 
     font-size: 18px;
     text-align: left;

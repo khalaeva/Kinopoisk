@@ -1,10 +1,10 @@
 <template>
     <div class="cart">
-        <router-link :to="{ name: 'movie', params: {id: movie.id} }">
+        <router-link :to="{ name: 'movie', params: {id: movie.id} }" @click="getMovie(movie.id)">
             <img class="poster" alt="poster" :src="movie.poster.url">        
         </router-link>
             <div class="icons">
-                <router-link :to="{ name: 'movie', params: {id: movie.id} }">
+                <router-link :to="{ name: 'movie', params: {id: movie.id} }" @click="getMovie(movie.id)">
                     <div style="margin-right: 35px;">
                         <EyeOutlined class="icon"/>
                         <p class="icon_txt">Cмотреть</p>
@@ -19,7 +19,7 @@
                     <p class="icon_txt">Добавлено</p>
                 </div>
             </div>
-        <router-link :to="{ name: 'movie', params: {id: movie.id} }">
+        <router-link :to="{ name: 'movie', params: {id: movie.id} }" @click="getMovie(movie.id)">
             <div class="rating">
                 <p style="font-size: 33px;">{{ movie.name }} </p>
                 <p style="font-size: 18px;">{{ movie.year }} · {{ movie.movieLength }} мин</p>
@@ -34,6 +34,9 @@
 
 <script setup>
 import { EyeOutlined, HeartFilled, HeartOutlined } from '@ant-design/icons-vue'
+import { useMainStore } from '@/store/MainStore'
+
+const mainStore = useMainStore()
 
 const props = defineProps({
     movie: {
@@ -45,6 +48,11 @@ const props = defineProps({
         require: false
     }
 })
+
+function getMovie(id) {
+    mainStore.getMovieById(id)
+    mainStore.recommend(props.movie.shortDescription)
+}
 
 function likedFilm(movie) {
     localStorage.setItem(`${movie.id}`, JSON.stringify(movie))
@@ -100,7 +108,7 @@ function unlikedFilm(movie) {
     margin-bottom: 50px;
     padding: 0 15px;
     width: 20%;
-    min-width: 200px;
+    min-width: 330px;
 }
 .poster {
     transition: 1s;
