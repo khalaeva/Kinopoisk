@@ -19,7 +19,7 @@
                 <li v-for="movie in filteredList().slice(0, 3)">
                     <router-link 
                         :to="{ name: 'movie', params: {id: movie.id} }" 
-                        @click="focused = false; getMovie(movie.id)"
+                        @click="focused = false; getMovie(movie)"
                     >
                         <MovieCartSearch 
                             :name="movie.name" 
@@ -61,9 +61,9 @@ function filteredList() {
     );
 }
 
-function getMovie(id) {
-    mainStore.getMovieById(id)
-    mainStore.recommend(props.movie.shortDescription)
+function getMovie(movie) {
+    mainStore.getMovieById(movie.id)
+    mainStore.recommend(movie)
 }
 </script>
 

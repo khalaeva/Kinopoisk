@@ -87,32 +87,41 @@ export const useMainStore = defineStore('MainStore', {
         },
         recommend(movie) {
             this.recommendMovies = [] 
-            var genre
+            var genre, name
             var persons = []
 
-            for (let i = 0; i < this.keyTxt.length; i++) {
+            movie.replace(/[А-Я][а-я]*/g, u => persons.push(u))                                                        //создаем массив слов-ключей (актеры, режиссеры, оскар и т.д.)
+
+            for (let i = 0; i < this.keyTxt.length; i++) {                                                              //определяем жанр кино 
                 if (movie.indexOf(this.keyTxt[i]) != -1) {
                     genre = this.keyTxt[i]
                 } 
             }
             
-            for (let i = 0; i < this.dataMovies.length; i++) {
-                if (this.dataMovies[i].shortDescription && genre && this.dataMovies[i].shortDescription != movie) {
-                    if (this.dataMovies[i].shortDescription.indexOf(genre) != -1) {
-                        this.recommendMovies.push(this.dataMovies[i])
+            for (let i = 0; i < this.dataMovies.length; i++) {                                                              
+                if (this.dataMovies[i].shortDescription && genre && this.dataMovies[i].shortDescription != movie) {     //если есть жанр у текущего фильма и это не тот же самый фильм
+                    if (this.dataMovies[i].shortDescription.indexOf(genre) != -1) {                                     //то мы сравниваем жанры текущего фильма и фильма[i]
+                        this.recommendMovies.push(this.dataMovies[i])                                                   //пушим в рекомендации, если жанры совпали 
+                    }
+                }
+                if (this.dataMovies[i].shortDescription === movie) {                                
+                    name = this.dataMovies[i].name
+                    if (name.length > 3) {
+                        name = name.match(/([А-Яа-яё]+)/i)                                                              //первое слово в названии текущего фильма
                     }
                 }
             }
-            
-            movie.replace(/[А-Я][а-я]*/g, u => persons.push(u))
 
-            for (let i = 0; i < this.dataMovies.length; i++) {
-                if (movie != this.dataMovies[i].shortDescription && this.dataMovies[i].shortDescription) {
+            for (let i = 0; i < this.dataMovies.length; i++) {                                                         //сравниваем по этим словам 
+                if (movie != this.dataMovies[i].shortDescription && this.dataMovies[i].shortDescription && !this.recommendMovies.includes(this.dataMovies[i])) {
                     for (let j = 0; j < persons.length; j++) {
                         if (this.dataMovies[i].shortDescription.indexOf(` ${persons[j]} `) >= 0) {
                             this.recommendMovies.push(this.dataMovies[i])
                             break
                         }
+                    }
+                    if (this.dataMovies[i].name.indexOf(`${name[1]}`) >= 0 && !this.recommendMovies.includes(this.dataMovies[i])) {      //если в названии фильма[i] есть первое слово из названия 
+                        this.recommendMovies.push(this.dataMovies[i])                                                  //текущего фильма (то самое name)
                     }
                 }
             }
