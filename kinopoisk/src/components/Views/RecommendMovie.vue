@@ -2,7 +2,11 @@
     <div class="recommend">
         <p class="recommend-txt">Рекомендуем:</p>
         <div class="movie-cart">
-            <MovieCart v-for="movie of mainStore.recommendMovies"  :movie="movie" :liked="liked(movie)"/>
+            <MovieCart 
+                v-for="movie of mainStore.recommendMovies"  
+                :movie="movie" 
+                :liked="liked(movie)"
+            />
         </div>
     </div>
 </template>

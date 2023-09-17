@@ -5,7 +5,6 @@
             class="input_search" 
             v-model:value="filmName" placeholder="Поиск кино" 
             @focus="focused = true" 
-            @blur="focused = false"
             style="border-radius: 10px;"
         >
             <template #prefix>
@@ -18,10 +17,27 @@
         >
             <ul class="movie_item">
                 <li v-for="movie in filteredList().slice(0, 3)">
-                    <MovieCartSearch :name="movie.name" :img="movie.poster.previewUrl" :year="movie.year"/>
+                    <router-link 
+                        :to="{ name: 'movie', params: {id: movie.id} }" 
+                        @click="focused = false; getMovie(movie.id)"
+                    >
+                        <MovieCartSearch 
+                            :name="movie.name" 
+                            :img="movie.poster.previewUrl" 
+                            :year="movie.year"
+                        />
+                    </router-link>
                 </li>
             </ul>
-            <button class="more_results" v-if="filteredList().slice(3).length"> Показать еще {{ filteredList().slice(3).length }}</button>
+            <router-link to="/">
+                <button 
+                    class="more_results" 
+                    v-if="filteredList().slice(3).length"
+                    @click="focused = false; mainStore.setMovies(filteredList())"
+                > 
+                Показать еще {{ filteredList().slice(3).length }}
+                </button>
+            </router-link>
             <div v-if="filmName&&!filteredList().length">
                 <p class="search_error">Нет результатов!</p>
             </div>
@@ -30,20 +46,25 @@
 </template>
 
 <script setup>
-    import { SearchOutlined } from '@ant-design/icons-vue';
-    import { useMainStore } from '@/store/MainStore'
-    import { ref } from 'vue';
-    import MovieCartSearch from './Views/MovieCartSearch.vue';
+import { SearchOutlined } from '@ant-design/icons-vue';
+import { useMainStore } from '@/store/MainStore'
+import { ref } from 'vue';
+import MovieCartSearch from './Views/MovieCartSearch.vue';
 
-    const mainStore = useMainStore();
-    const filmName = ref('');
-    let focused = ref(false);
+const mainStore = useMainStore();
+const filmName = ref('');
+let focused = ref(false);
 
-    function filteredList() {
-        return mainStore.movies.filter((movie) =>
-            movie.name.toLowerCase().includes(filmName.value.toLowerCase())
-        );
-    }
+function filteredList() {
+    return mainStore.movies.filter((movie) =>
+        movie.name.toLowerCase().includes(filmName.value.toLowerCase())
+    );
+}
+
+function getMovie(id) {
+    mainStore.getMovieById(id)
+    mainStore.recommend(props.movie.shortDescription)
+}
 </script>
 
 <style lang="scss" scoped>

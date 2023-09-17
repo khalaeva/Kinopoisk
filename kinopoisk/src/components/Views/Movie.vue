@@ -1,14 +1,26 @@
 <template>
     <div class="current_movie">
-        <img class="poster" alt="poster" :src="mainStore.currentMovie.poster.url">
+        <img 
+            class="poster" 
+            alt="poster" 
+            :src="mainStore.currentMovie.poster.url"
+        >
         <div class="describe">
             <div class="name">
                 <p class="name__txt">{{ mainStore.currentMovie.name }} ({{ mainStore.currentMovie.year }})</p>
-                <button v-if="!mainStore.currentMovie.liked" class="name__btn" @click="mainStore.like()">
+                <button 
+                    v-if="!mainStore.currentMovie.liked" 
+                    class="name__btn"
+                    @click="mainStore.like()"
+                >
                     <HeartOutlined class="name__icon"/>
                     Добавить
                 </button>
-                <button v-else class="name__btn" @click="mainStore.unlike()">
+                <button 
+                    v-else 
+                    class="name__btn" 
+                    @click="mainStore.unlike()"
+                >
                     <HeartFilled class="name__icon"/>
                     Добавлено
                 </button>
@@ -31,7 +43,13 @@
                 <div class="rate_movie">
                     <p class="rate_movie__txt">Оцените фильм</p>
                     <div class="rate_movie__num">
-                        <p class="rate_movie__numbers" style="" v-for="num in 10" @click="mainStore.rateMovie(num)">{{ num }}</p>
+                        <p 
+                            class="rate_movie__numbers" 
+                            v-for="num in 10" 
+                            @click="mainStore.rateMovie(num)"
+                        >
+                        {{ num }}
+                        </p>
                     </div>
                 </div>
             </div>

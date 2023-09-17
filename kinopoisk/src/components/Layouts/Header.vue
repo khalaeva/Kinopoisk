@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <router-link :to="{ name: 'home'}">
+        <router-link :to="{ name: 'home'}" @click="mainStore.setMovies(0)">
             <p class="site_name">Film Online</p>
         </router-link>
         <SearchBar class="search"/>
@@ -14,8 +14,11 @@
 </template>
 
 <script setup>
-    import SearchBar from '../SearchBar.vue'
-    import { HeartFilled } from '@ant-design/icons-vue';
+import SearchBar from '../SearchBar.vue'
+import { HeartFilled } from '@ant-design/icons-vue';
+import { useMainStore } from '../../store/MainStore';
+
+const mainStore = useMainStore()
 </script>
 
 <style lang="scss" scoped>

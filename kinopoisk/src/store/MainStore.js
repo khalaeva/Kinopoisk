@@ -10,6 +10,16 @@ export const useMainStore = defineStore('MainStore', {
         dataMovies: []
     }),
     actions: {
+        setMovies(arr) {
+            if (!arr) {
+                this.movies = this.dataMovies
+                this.pagination(this.movies)
+            }
+            else {
+                this.movies = arr
+                this.pagination(this.movies)
+            }
+        },
         like() {
             this.currentMovie.liked = true
             localStorage.setItem(`${this.currentMovie.id}`, JSON.stringify(this.currentMovie))
@@ -40,7 +50,8 @@ export const useMainStore = defineStore('MainStore', {
             this.pagination(this.movies)
         },
         getMoviesFromAPI() {
-            fetch('http://localhost:3000/docs')
+            if (!this.movies.length) {
+                fetch('http://localhost:3000/docs')
                 .then((response) => {
                     return response.json();
                 })
@@ -49,6 +60,7 @@ export const useMainStore = defineStore('MainStore', {
                     this.dataMovies = data
                     this.pagination(this.movies)
                 });
+            }
         },
         getMovieById(id) {
             this.currentMovie = {}

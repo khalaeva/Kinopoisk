@@ -2,10 +2,20 @@
     <section class="films-list">
         <SortMovies/>
         <div class="movie-cart">
-            <MovieCart v-for="movie of mainStore.moviesByPages[numberPage - 1]"  :movie="movie" :liked="liked(movie)"/>
+            <MovieCart 
+                v-for="movie of mainStore.moviesByPages[numberPage - 1]"  
+                :movie="movie" 
+                :liked="liked(movie)"
+            />
         </div>
         <div class="pagination">
-            <a-pagination v-model:current="numberPage" @change="onChange()" :pageSize="20" :total="mainStore.moviesByPages.length * 20" :show-size-changer="false"/>
+            <a-pagination 
+                v-model:current="numberPage" 
+                @change="onChange()" 
+                :pageSize="20" 
+                :total="mainStore.moviesByPages.length * 20" 
+                :show-size-changer="false"
+            />
         </div>
     </section>
 </template>
