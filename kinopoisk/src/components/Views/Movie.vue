@@ -4,11 +4,11 @@
         <div class="describe">
             <div class="name">
                 <p class="name__txt">{{ mainStore.currentMovie.name }} ({{ mainStore.currentMovie.year }})</p>
-                <button v-if="!liked" class="name__btn" @click="liked = !liked">
+                <button v-if="!mainStore.currentMovie.liked" class="name__btn" @click="mainStore.like()">
                     <HeartOutlined class="name__icon"/>
                     Добавить
                 </button>
-                <button v-else @click="liked = !liked" class="name__btn">
+                <button v-else class="name__btn" @click="mainStore.unlike()">
                     <HeartFilled class="name__icon"/>
                     Добавлено
                 </button>
@@ -23,14 +23,15 @@
                     <p>imbd.com</p>
                 </div>
                 <div class="my_score">
-                    <p class="score_sites_num">{{ rating }}</p>
+                    <p v-if="!mainStore.currentMovie.myRating">-</p>
+                    <p v-else class="score_sites_num">{{ mainStore.currentMovie.myRating }}</p>
                     <p>Моя оценка</p>
                 </div>
                 <div class="separator"></div>
                 <div class="rate_movie">
                     <p class="rate_movie__txt">Оцените фильм</p>
                     <div class="rate_movie__num">
-                        <p class="rate_movie__numbers" style="" v-for="num in 10" @click="rateMovie(mainStore.currentMovie, num)">{{ num }}</p>
+                        <p class="rate_movie__numbers" style="" v-for="num in 10" @click="mainStore.rateMovie(num)">{{ num }}</p>
                     </div>
                 </div>
             </div>
@@ -43,27 +44,9 @@
 <script setup>
 import { HeartFilled, HeartOutlined } from '@ant-design/icons-vue';
 import { useMainStore } from '@/store/MainStore'
-import { ref } from 'vue'
 import RecommendMovie from './RecommendMovie.vue';
 
 const mainStore = useMainStore()
-let liked = ref(false)
-let num = ref(0)
-// JSON.parse(localStorage.getItem(`${mainStore.currentMovie.id}`)).myRating) 
-
-function rateMovie(currMovie, num) {
-    if (localStorage.getItem(`${currMovie.id}`)) {
-        let movie = JSON.parse(localStorage.getItem(`${currMovie.id}`))
-        movie.myRating = `${num}`
-        localStorage.setItem(`${currMovie.id}`, JSON.stringify(movie))
-        this.rating = num
-    }
-    else {
-        currMovie.myRating = `${num}`
-        localStorage.setItem(`${currMovie.id}`, JSON.stringify(currMovie))
-        this.rating = num
-    }
-}
 </script>
 
 <style lang="scss" scoped>

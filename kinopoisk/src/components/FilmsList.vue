@@ -19,10 +19,13 @@ import MovieCart from './Views/MovieCart.vue'
 const mainStore = useMainStore()
 const numberPage = ref(1)
 
-mainStore.getMoviesFromAPI()
+mainStore.getMoviesFromAPI()    
 
 function liked(movie) {
-    return (localStorage.getItem(`${movie.id}`) !== null)
+    if (localStorage.getItem(`${movie.id}`)) {
+        return JSON.parse(localStorage.getItem(`${movie.id}`)).liked
+    }
+    else return false
 }
 
 function onChange() {

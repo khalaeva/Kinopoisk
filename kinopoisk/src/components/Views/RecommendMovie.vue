@@ -23,7 +23,10 @@ const props = defineProps({
 mainStore.recommend(props.movie.shortDescription)
 
 function liked(movie) {
-    return (localStorage.getItem(`${movie.id}`) !== null)
+    if (localStorage.getItem(`${movie.id}`)) {
+        return JSON.parse(localStorage.getItem(`${movie.id}`)).liked
+    }
+    else return false
 }
 </script>
 

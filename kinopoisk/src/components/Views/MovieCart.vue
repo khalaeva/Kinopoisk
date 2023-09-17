@@ -1,25 +1,44 @@
 <template>
     <div class="cart">
-        <router-link :to="{ name: 'movie', params: {id: movie.id} }" @click="getMovie(movie.id)">
-            <img class="poster" alt="poster" :src="movie.poster.url">        
+        <router-link 
+            :to="{ name: 'movie', params: {id: movie.id} }" 
+            @click="getMovie(movie.id)"
+        >
+            <img 
+                class="poster" 
+                alt="poster" 
+                :src="movie.poster.url"
+            >        
         </router-link>
             <div class="icons">
-                <router-link :to="{ name: 'movie', params: {id: movie.id} }" @click="getMovie(movie.id)">
+                <router-link 
+                    :to="{ name: 'movie', params: {id: movie.id} }" 
+                    @click="getMovie(movie.id)"
+                >
                     <div style="margin-right: 35px;">
                         <EyeOutlined class="icon"/>
                         <p class="icon_txt">Cмотреть</p>
                     </div>
                 </router-link>
                 <div v-if="!liked">
-                    <HeartOutlined @click="liked = !liked; likedFilm(movie)" class="icon"/>
+                    <HeartOutlined 
+                        @click="liked = !liked; likedFilm(movie)" 
+                        class="icon"
+                    />
                     <p class="icon_txt">Добавить</p>
                 </div>
                 <div v-else>
-                    <HeartFilled @click="liked = !liked; unlikedFilm(movie)" class="icon"/>
+                    <HeartFilled 
+                        @click="liked = !liked; 
+                        unlikedFilm(movie)" class="icon"
+                    />
                     <p class="icon_txt">Добавлено</p>
                 </div>
             </div>
-        <router-link :to="{ name: 'movie', params: {id: movie.id} }" @click="getMovie(movie.id)">
+        <router-link 
+            :to="{ name: 'movie', params: {id: movie.id} }" 
+            @click="getMovie(movie.id)"
+        >
             <div class="rating">
                 <p style="font-size: 33px;">{{ movie.name }} </p>
                 <p style="font-size: 18px;">{{ movie.year }} · {{ movie.movieLength }} мин</p>
@@ -55,11 +74,14 @@ function getMovie(id) {
 }
 
 function likedFilm(movie) {
+    movie.liked = true
     localStorage.setItem(`${movie.id}`, JSON.stringify(movie))
 }
 
 function unlikedFilm(movie) {
-    localStorage.removeItem(`${movie.id}`)
+    let mov = JSON.parse(localStorage.getItem(`${movie.id}`))
+    mov.liked = false
+    localStorage.setItem(`${movie.id}`, JSON.stringify(mov))
 }
 </script>
 
